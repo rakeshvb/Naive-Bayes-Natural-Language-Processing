@@ -11,15 +11,21 @@ Name: Rakesh Vijay Bora
 1f. ham F1 score: 0.96
 
 2. Performance on the development data with 10% of the training data
-2a. spam precision:
-2b. spam recall: 
-2c. spam F1 score: 
-2d. ham precision:
-2e. ham recall: 
-2f. ham F1 score:
+2a. spam precision: 0.99
+2b. spam recall: 0.99
+2c. spam F1 score: 0.99
+2d. ham precision: 0.97
+2e. ham recall: 0.97
+2f. ham F1 score: 0.97
 
 3. Description of enhancement(s) you tried (e.g., different approach(es) to smoothing, treating common words differently, dealing with unknown words differently):
-
+I developed a script called nbclassify_modification.py which does the additional enhancement task of dealing with thrshould key lenght words in ham and spam files,
+it also does work with common words in ham and spam files.
+3a. I have deleted tokens with threshold length of less then or equal to 3 from my spam and ham directory.
+3b. I found the top 100 frequency tokens from ham and spam files, then using those i did intersection operation on those words, to find common words from both directories;
+ 	and deleted them from parent spam and ham directory and performed the classification.
+	
+	By working around the parameters i found that providing threshold value length to 3 and deleting common words from spam and ham directory gave me optimum result. 
 
 4. Best performance results based on enhancements. Note that these could be the same or worse than the standard implementation.
 4a. spam precision: 0.99
