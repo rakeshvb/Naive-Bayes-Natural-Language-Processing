@@ -5,10 +5,10 @@ import json
 
 def calculate(classProb,dictionary,anotherDictionary,wordcount,vocabSize,content):
     wors=content.split()
-    counts = [dictionary[wor][0] if wor in dictionary else 0 if wor in anotherDictionary else -1 for wor in wors]
-    counts = [c for c in counts if c != -1]
+    temp_Values = [dictionary[wor][0] if wor in dictionary else 0 if wor in anotherDictionary else -1 for wor in wors]
+    temp_Values = [c for c in temp_Values if c != -1]
     
-    logodds = [ math.log((c+1)/(wordcount + vocabSize)) for c in counts]
+    logodds = [ math.log((c+1)/(wordcount + vocabSize)) for c in temp_Values]
     sumLogOdds = sum(logodds) + math.log(classProb)
     return sumLogOdds;
 
@@ -86,7 +86,7 @@ vocabSize = len(distWords)
 #print (vocabSize)
 resultDict=dict()
 PredictDictionary=dict()
-predictedLabels = []
+plabels = []
     
 for ha in file:
     file1=open(ha, "r", encoding="latin1")
@@ -104,13 +104,13 @@ for ha in file:
     #print(resultDict)
     if(resultForHam > resultForSpam):
         #print(resultForSpam)
-        predictedLabels = predictedLabels + ["ham"]
+        plabels = plabels + ["ham"]
     else:
-        predictedLabels = predictedLabels + ["spam"]
-#print(predictedLabels) 
+        plabels = plabels + ["spam"]
+#print(plabels) 
 
 writeContent = ""
-for result in zip(file,predictedLabels):
+for result in zip(file,plabels):
     writeContent = writeContent + "{0} {1}".format(result[1],result[0]) + "\n"
 
 outfile = open("nboutput.txt","w")
