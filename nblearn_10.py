@@ -40,6 +40,8 @@ for dirpath, dirnames, filenames in os.walk(sys.argv[1]):
 #print(file_not_spam)
 spamFileNumber=len(file_spam)
 hamFileNumber=len(file_not_spam)
+spamten=int(spamFileNumber*.1)
+hamten=int(hamFileNumber*.1)
 probOfSpamFiles=((spamFileNumber)/(spamFileNumber+hamFileNumber))
 probOfhamFiles=((hamFileNumber)/(spamFileNumber+hamFileNumber))
 #print("SPAMProbability "+ str(probOfSpamFiles))
@@ -55,22 +57,24 @@ o.write(res)
 o.write('\n')
 
 #Spam File Calculation
-
+hl=0
 for spam in file_spam:
-    file1=open(spam, "r", encoding="latin1")
-    wordOfSpamFiles=file1.read().replace('\n',' ').split()
-    #print(wordOfSpamFiles)
-    for spamDistinctWords in wordOfSpamFiles:
-        if spamDistinctWords in spamDictionary:
-            num=spamDictionary.get(spamDistinctWords)
-            spamDictionary[spamDistinctWords]=num+1
-        else:
-            spamDictionary[spamDistinctWords]=1
+    if hl<spamten:
+        hl=hl+1
+        file1=open(spam, "r", encoding="latin1")
+        wordOfSpamFiles=file1.read().replace('\n',' ').split()
+        #print(wordOfSpamFiles)
+        for spamDistinctWords in wordOfSpamFiles:
+            if spamDistinctWords in spamDictionary:
+                num=spamDictionary.get(spamDistinctWords)
+                spamDictionary[spamDistinctWords]=num+1
+            else:
+                spamDictionary[spamDistinctWords]=1
             
 #spamDictionary.pop('')
 #print(spamDictionary)
 distNumberOfWordsInSpamFiles=len(spamDictionary.keys())
-#print(distNumberOfWordsInSpamFiles)  
+print(distNumberOfWordsInSpamFiles)  
 
 
 ###Spam File Word Probability Count
@@ -87,25 +91,27 @@ for asd in spamDictionary.keys():
     #o.write('\n')
     probDictOfSpamWords[asd]=prob_asd     
 
-#print(probDictOfSpamWords)
+print(probDictOfSpamWords)
 
 #Non-Spam File Calculation
-
+sl=0
 for ham in file_not_spam:
-    file2=open(ham, "r", encoding="latin1")
-    wordOfHamFiles=file2.read().replace('\n',' ').split()
-    #print(wordOfSpamFiles)
-    for hamDistinctWords in wordOfHamFiles:
-        if hamDistinctWords in hamDictionary:
-            num2=hamDictionary.get(hamDistinctWords)
-            hamDictionary[hamDistinctWords]=num2+1
-        else:
-            hamDictionary[hamDistinctWords]=1
+    if sl<spamten:
+        sl=sl+1
+        file2=open(ham, "r", encoding="latin1")
+        wordOfHamFiles=file2.read().replace('\n',' ').split()
+        #print(wordOfSpamFiles)
+        for hamDistinctWords in wordOfHamFiles:
+            if hamDistinctWords in hamDictionary:
+                num2=hamDictionary.get(hamDistinctWords)
+                hamDictionary[hamDistinctWords]=num2+1
+            else:
+                hamDictionary[hamDistinctWords]=1
 
 #hamDictionary.pop('')            
 #print(hamDictionary)
 distNumberOfWordsInHamFiles=len(hamDictionary.keys())
-#print(distNumberOfWordsInHamFiles)          
+print(distNumberOfWordsInHamFiles)          
 
 
 
@@ -122,7 +128,7 @@ for asd1 in hamDictionary.keys():
     #o.write(res)
     #o.write('\n')
     probDictOfHamWords[asd1]=prob_asd1          
-#print(probDictOfHamWords)
+print(probDictOfHamWords)
 
 res="Distinct_Number_of_words_in_spam_files "+str(distNumberOfWordsInSpamFiles)
 o.write(res)
